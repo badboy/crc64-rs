@@ -1,0 +1,14 @@
+[package]
+
+name = "crc64-rs"
+version = "0.1.0"
+authors = ["Jan-Erik Rediger <badboy@archlinux.us>"]
+
+[lib]
+name = "crc64"
+path = "src/crc64/lib.rs"
+
+[[bin]]
+name = "crc64"
+path = "src/crc64/main.rs"
+doc  = false
