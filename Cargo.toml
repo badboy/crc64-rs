@@ -1,14 +1,18 @@
 [package]
-
 name = "crc64-rs"
 version = "0.1.0"
 authors = ["Jan-Erik Rediger <badboy@archlinux.us>"]
+keywords = ["redundancy check", "hashing", "checksum"]
+description = "CRC64 checksum implementation"
+homepage = "https://github.com/badboy/crc64-rs"
+license = "BSD-3-Clause"
+readme = "README.md"
 
 [lib]
 name = "crc64"
-path = "src/crc64/lib.rs"
+path = "src/lib.rs"
 
 [[bin]]
 name = "crc64"
-path = "src/crc64/main.rs"
+path = "src/main.rs"
 doc  = false

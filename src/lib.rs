@@ -1,3 +1,40 @@
+#![experimental]
+
+/// Calculate the crc64 checksum of the given data, starting with the given crc.
+///
+/// Implements the CRC64 used by Redis, which is the variant with "Jones" coefficients and init value of 0.
+///
+/// Specification of this CRC64 variant follows:
+///
+/// ```text
+/// Name: crc-64-jones
+/// Width: 64 bites
+/// Poly: 0xad93d23594c935a9
+/// Reflected In: True
+/// Xor_In: 0xffffffffffffffff
+/// Reflected_Out: True
+/// Xor_Out: 0x0
+/// Check("123456789"): 0xe9c6d914c4b8d9ca
+/// ```
+///
+/// Example:
+///
+/// ```rust
+/// crc64::crc64(0, "123456789".as_bytes());
+/// ```
+pub fn crc64(crc: u64, data: &[u8]) -> u64 {
+    let mut new_crc = crc;
+    for &byte in data.iter() {
+        new_crc = CRC64_TAB[(new_crc as u8 ^ byte) as uint] ^ (new_crc >> 8);
+    }
+    new_crc
+}
+
+#[test]
+fn test_crc64_works() {
+    assert_eq!(0xe9c6d914c4b8d9ca, crc64(0, "123456789".as_bytes()))
+}
+
 /* Redis uses the CRC64 variant with "Jones" coefficients and init value of 0.
  *
  * Specification of this CRC64 variant follows:
@@ -37,7 +74,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE. */
 
-static CRC64_TAB : &[u64, ..256] = [
+static CRC64_TAB : &'static [u64, ..256] = &[
     0x0000000000000000, 0x7ad870c830358979,
     0xf5b0e190606b12f2, 0x8f689158505e9b8b,
     0xc038e5739841b68f, 0xbae095bba8743ff6,
