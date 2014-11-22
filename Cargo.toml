@@ -2,7 +2,7 @@
 name = "crc64-rs"
 version = "0.1.0"
 authors = ["Jan-Erik Rediger <badboy@archlinux.us>"]
-keywords = ["redundancy check", "hashing", "checksum"]
+keywords = ["hashing", "checksum"]
 description = "CRC64 checksum implementation"
 homepage = "https://github.com/badboy/crc64-rs"
 license = "BSD-3-Clause"
