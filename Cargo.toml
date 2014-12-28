@@ -14,5 +14,8 @@ path = "src/lib.rs"
 
 [[bin]]
 name = "crc64"
-path = "src/main.rs"
+path = "src/crcspeed.rs"
 doc  = false
+
+[dependencies.time]
+git = "http://github.com/rust-lang/time"
