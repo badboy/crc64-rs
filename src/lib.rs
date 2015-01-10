@@ -1,6 +1,5 @@
 #![experimental]
 #![feature(slicing_syntax)]
-#![feature(macro_rules)]
 
 use std::mem;
 
@@ -28,11 +27,11 @@ use std::mem;
 /// crc64::crc64(table, 0, "123456789".as_bytes());
 /// ```
 
-fn crc_reflect(data: u64, len: uint) -> u64 {
+fn crc_reflect(data: u64, len: usize) -> u64 {
     let mut data = data;
     let mut ret = data & 0x01;
 
-    let mut i = 1u;
+    let mut i = 1us;
     while i < len {
         data >>= 1;
         ret = (ret << 1) | (data & 0x01);
@@ -50,7 +49,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
 
     let mut bit : bool;
 
-    let mut offset = 0u;
+    let mut offset = 0us;
 
     while offset < len {
         let c = in_data[offset];
@@ -79,11 +78,11 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
 
     let mut table : Vec<Vec<u64>> = Vec::with_capacity(8);
 
-    for _ in range(0, 8u) {
+    for _ in range(0, 8us) {
         table.push(Vec::with_capacity(256));
     };
 
-    for n in range(0, 256u) {
+    for n in range(0, 256us) {
         table[0].push(crc64_trivial(0, vec![n as u8].as_slice()));
         table[1].push(0);
         table[2].push(0);
@@ -97,7 +96,7 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
     for n in range(0, 256) {
         crc = table[0][n];
         for k in range(1, 8) {
-            let idx  = (crc as uint) & 0xff;
+            let idx  = (crc as usize) & 0xff;
             crc = table[0][idx] ^ (crc >> 8);
             table[k][n] = crc;
         }
@@ -111,7 +110,7 @@ macro_rules! slice_to_long {
     ($curVec:expr) => {
         {
             unsafe {
-                let (tmp, _) : (*const u64, u64) = mem::transmute($curVec);
+                let (tmp, _) : (*const u64, u64) = mem::transmute(&$curVec);
                 *tmp
             }
         }
@@ -121,25 +120,25 @@ macro_rules! slice_to_long {
 pub fn crc64(table: Vec<Vec<u64>>, crc: u64, data: &[u8]) -> u64 {
     let mut crc = crc;
     let mut len = data.len();
-    let mut offset = 0u;
+    let mut offset = 0us;
 
     while len >= 8 {
         crc ^= slice_to_long!(data[offset..(offset+8)]);
-        crc = table[7][(crc & 0xff) as uint] ^
-              table[6][((crc >> 8) & 0xff) as uint] ^
-              table[5][((crc >> 16) & 0xff) as uint] ^
-              table[4][((crc >> 24) & 0xff) as uint] ^
-              table[3][((crc >> 32) & 0xff) as uint] ^
-              table[2][((crc >> 40) & 0xff) as uint] ^
-              table[1][((crc >> 48) & 0xff) as uint] ^
-              table[0][(crc >> 56) as uint];
+        crc = table[7][(crc & 0xff) as usize] ^
+              table[6][((crc >> 8) & 0xff) as usize] ^
+              table[5][((crc >> 16) & 0xff) as usize] ^
+              table[4][((crc >> 24) & 0xff) as usize] ^
+              table[3][((crc >> 32) & 0xff) as usize] ^
+              table[2][((crc >> 40) & 0xff) as usize] ^
+              table[1][((crc >> 48) & 0xff) as usize] ^
+              table[0][(crc >> 56) as usize];
 
         offset += 8;
         len -= 8;
     }
 
     while len > 0 {
-        crc = table[0][((crc ^ data[offset] as u64) & 0xff) as uint] ^ (crc >> 8);
+        crc = table[0][((crc ^ data[offset] as u64) & 0xff) as usize] ^ (crc >> 8);
         offset += 1;
         len -= 1;
     }
