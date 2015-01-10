@@ -17,5 +17,5 @@ name = "crc64"
 path = "src/crcspeed.rs"
 doc  = false
 
-[dependencies.time]
-git = "http://github.com/rust-lang/time"
+[dependencies]
+time = "*"
