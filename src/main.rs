@@ -17,7 +17,7 @@ fn main() {
 
             let mut error = false;
             loop {
-                let mut buf = [0, ..100];
+                let mut buf = [0; 100];
                 match reader.read(buf.as_mut_slice()) {
                     Err(e) => {
                         if e.kind != std::io::EndOfFile {
@@ -26,7 +26,7 @@ fn main() {
                         }
                         break;
                     },
-                    Ok(nread) => crc = crc64::crc64(crc, buf[..nread])
+                    Ok(nread) => crc = crc64::crc64(crc, &buf[..nread])
                 }
             }
 
