@@ -25,7 +25,7 @@
 pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut new_crc = crc;
     for &byte in data.iter() {
-        new_crc = CRC64_TAB[(new_crc as u8 ^ byte) as uint] ^ (new_crc >> 8);
+        new_crc = CRC64_TAB[(new_crc as u8 ^ byte) as usize] ^ (new_crc >> 8);
     }
     new_crc
 }
@@ -74,7 +74,7 @@ fn test_crc64_works() {
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE. */
 
-static CRC64_TAB : &'static [u64, ..256] = &[
+static CRC64_TAB : &'static [u64; 256] = &[
     0x0000000000000000, 0x7ad870c830358979,
     0xf5b0e190606b12f2, 0x8f689158505e9b8b,
     0xc038e5739841b68f, 0xbae095bba8743ff6,
