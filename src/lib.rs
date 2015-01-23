@@ -78,11 +78,11 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
 
     let mut table : Vec<Vec<u64>> = Vec::with_capacity(8);
 
-    for _ in range(0, 8us) {
+    for _ in (0..8) {
         table.push(Vec::with_capacity(256));
     };
 
-    for n in range(0, 256us) {
+    for n in (0..256) {
         table[0].push(crc64_trivial(0, vec![n as u8].as_slice()));
         table[1].push(0);
         table[2].push(0);
@@ -93,9 +93,9 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
         table[7].push(0);
     }
 
-    for n in range(0, 256) {
+    for n in (0..256) {
         crc = table[0][n];
-        for k in range(1, 8) {
+        for k in (1..8) {
             let idx  = (crc as usize) & 0xff;
             crc = table[0][idx] ^ (crc >> 8);
             table[k][n] = crc;
