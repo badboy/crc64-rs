@@ -23,8 +23,7 @@ use std::mem;
 /// Example:
 ///
 /// ```rust
-/// let table = crc64::crc64_init();
-/// crc64::crc64(table, 0, "123456789".as_bytes());
+/// crc64::crc64(0, "123456789".as_bytes());
 /// ```
 
 use crc_table::CRC64_TAB;
@@ -151,6 +150,5 @@ pub fn crc64(crc: u64, data: &[u8]) -> u64 {
 
 #[test]
 fn test_crc64_works() {
-    let table = crc64_init();
-    assert_eq!(0xe9c6d914c4b8d9ca, crc64(table, 0, "123456789".as_bytes()))
+    assert_eq!(0xe9c6d914c4b8d9ca, crc64(0, "123456789".as_bytes()))
 }
