@@ -1,3 +1,7 @@
+### 0.2.1 - 23. January 2015
+
+* Fix build issues with Rust nightly
+
 ### 0.2.0 - 23. January 2015
 
 * Imense speedup thanks to Matt's crcspeed (https://matt.sh/redis-crcspeed)
