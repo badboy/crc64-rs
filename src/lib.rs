@@ -27,6 +27,9 @@ use std::mem;
 /// crc64::crc64(table, 0, "123456789".as_bytes());
 /// ```
 
+use crc_table::CRC64_TAB;
+mod crc_table;
+
 fn crc_reflect(data: u64, len: usize) -> u64 {
     let mut data = data;
     let mut ret = data & 0x01;
@@ -117,28 +120,28 @@ macro_rules! slice_to_long {
     }
 }
 
-pub fn crc64(table: Vec<Vec<u64>>, crc: u64, data: &[u8]) -> u64 {
+pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut crc = crc;
     let mut len = data.len();
     let mut offset = 0us;
 
     while len >= 8 {
         crc ^= slice_to_long!(data[offset..(offset+8)]);
-        crc = table[7][(crc & 0xff) as usize] ^
-              table[6][((crc >> 8) & 0xff) as usize] ^
-              table[5][((crc >> 16) & 0xff) as usize] ^
-              table[4][((crc >> 24) & 0xff) as usize] ^
-              table[3][((crc >> 32) & 0xff) as usize] ^
-              table[2][((crc >> 40) & 0xff) as usize] ^
-              table[1][((crc >> 48) & 0xff) as usize] ^
-              table[0][(crc >> 56) as usize];
+        crc = CRC64_TAB[7][(crc & 0xff) as usize] ^
+              CRC64_TAB[6][((crc >> 8) & 0xff) as usize] ^
+              CRC64_TAB[5][((crc >> 16) & 0xff) as usize] ^
+              CRC64_TAB[4][((crc >> 24) & 0xff) as usize] ^
+              CRC64_TAB[3][((crc >> 32) & 0xff) as usize] ^
+              CRC64_TAB[2][((crc >> 40) & 0xff) as usize] ^
+              CRC64_TAB[1][((crc >> 48) & 0xff) as usize] ^
+              CRC64_TAB[0][(crc >> 56) as usize];
 
         offset += 8;
         len -= 8;
     }
 
     while len > 0 {
-        crc = table[0][((crc ^ data[offset] as u64) & 0xff) as usize] ^ (crc >> 8);
+        crc = CRC64_TAB[0][((crc ^ data[offset] as u64) & 0xff) as usize] ^ (crc >> 8);
         offset += 1;
         len -= 1;
     }
