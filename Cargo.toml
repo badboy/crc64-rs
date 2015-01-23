@@ -1,6 +1,6 @@
 [package]
-name = "crc64-rs"
-version = "0.1.0"
+name = "crc64"
+version = "0.2.0"
 authors = ["Jan-Erik Rediger <badboy@archlinux.us>"]
 keywords = ["hashing", "checksum"]
 description = "CRC64 checksum implementation"
