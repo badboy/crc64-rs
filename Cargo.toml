@@ -14,7 +14,7 @@ path = "src/lib.rs"
 
 [[bin]]
 name = "crc64"
-path = "src/crcspeed.rs"
+path = "src/main.rs"
 doc  = false
 
 [dependencies]
