@@ -2,7 +2,7 @@
 
 A 5-line\* CRC64 implementation in Rust.
 
-\*: Yes, I cheated *a bit*. It is [antirez](https://github.com/antirez)' implementation of the [CRC64 algorithm for Redis][crc64.c], which basically consists of one huge table. See [lib.rs](src/crc64/lib.rs) for the exact constants used.
+\*: Yes, I cheated *a bit*. It is [antirez](https://github.com/antirez)' implementation of the [CRC64 algorithm for Redis][crc64.c], which basically consists of one huge table. See [lib.rs](src/lib.rs) for the exact constants used. Oh, since v0.2.0 I cheated even more. It's not 5 lines anymore, more like 25.
 
 ## Build
 
