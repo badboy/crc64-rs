@@ -1,18 +1,24 @@
-#![feature(slicing_syntax)]
+#![feature(core)]
+#![feature(io)]
+#![feature(env)]
+#![feature(path)]
 
 extern crate crc64;
 use crc64::crc64;
-use std::os;
-use std::io::{BufferedReader, File};
+use std::env;
+use std::old_io::{BufferedReader, File};
 
 fn main() {
-    let args = os::args();
-    if args.len() == 1 {
-        println!("Usage: {} [list of files]", args[0]);
+    let mut args = env::args();
+    let (len,_) = args.size_hint();
+    let prog = args.next().unwrap();
+
+    if len == 1 {
+        println!("Usage: {} [list of files]", prog);
         return
     }
 
-    for f in args[1..].iter() {
+    for f in args {
         let mut crc : u64 = 0;
         let file = File::open(&Path::new(f.to_string()));
         let mut reader = BufferedReader::new(file);
@@ -22,7 +28,7 @@ fn main() {
             let mut buf = [0; 100];
             match reader.read(buf.as_mut_slice()) {
                 Err(e) => {
-                    if e.kind != std::io::EndOfFile {
+                    if e.kind != std::old_io::EndOfFile {
                         error = true;
                         print!("error reading '{}': {}", f, e);
                     }
