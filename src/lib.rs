@@ -1,6 +1,3 @@
-#![experimental]
-#![feature(slicing_syntax)]
-
 use std::mem;
 
 /// Calculate the crc64 checksum of the given data, starting with the given crc.
@@ -33,7 +30,7 @@ fn crc_reflect(data: u64, len: usize) -> u64 {
     let mut data = data;
     let mut ret = data & 0x01;
 
-    let mut i = 1us;
+    let mut i = 1usize;
     while i < len {
         data >>= 1;
         ret = (ret << 1) | (data & 0x01);
@@ -51,7 +48,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
 
     let mut bit : bool;
 
-    let mut offset = 0us;
+    let mut offset = 0usize;
 
     while offset < len {
         let c = in_data[offset];
@@ -84,7 +81,7 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
         table.push(Vec::with_capacity(256));
     };
 
-    for n in (0us..256) {
+    for n in (0usize..256) {
         table[0].push(crc64_trivial(0, vec![n as u8].as_slice()));
         table[1].push(0);
         table[2].push(0);
@@ -95,9 +92,9 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
         table[7].push(0);
     }
 
-    for n in (0us..256) {
+    for n in (0usize..256) {
         crc = table[0][n];
-        for k in (1us..8) {
+        for k in (1usize..8) {
             let idx  = (crc as usize) & 0xff;
             crc = table[0][idx] ^ (crc >> 8);
             table[k][n] = crc;
@@ -122,7 +119,7 @@ macro_rules! slice_to_long {
 pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut crc = crc;
     let mut len = data.len();
-    let mut offset = 0us;
+    let mut offset = 0usize;
 
     while len >= 8 {
         crc ^= slice_to_long!(data[offset..(offset+8)]);
