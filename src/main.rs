@@ -1,7 +1,6 @@
 #![feature(core)]
-#![feature(io)]
-#![feature(env)]
-#![feature(path)]
+#![feature(old_io)]
+#![feature(old_path)]
 
 extern crate crc64;
 use crc64::crc64;

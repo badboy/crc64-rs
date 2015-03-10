@@ -1,4 +1,4 @@
-use std::mem;
+#![feature(core)]
 
 /// Calculate the crc64 checksum of the given data, starting with the given crc.
 ///
@@ -23,6 +23,7 @@ use std::mem;
 /// crc64::crc64(0, "123456789".as_bytes());
 /// ```
 
+use std::mem;
 use crc_table::CRC64_TAB;
 mod crc_table;
 
