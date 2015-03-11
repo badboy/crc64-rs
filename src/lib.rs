@@ -110,7 +110,7 @@ macro_rules! slice_to_long {
     ($curVec:expr) => {
         {
             unsafe {
-                let (tmp, _) : (*const u64, u64) = mem::transmute(&$curVec);
+                let (tmp, _) : (*const u64, usize) = mem::transmute(&$curVec);
                 *tmp
             }
         }
