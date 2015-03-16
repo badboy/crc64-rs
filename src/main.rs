@@ -1,13 +1,13 @@
 #![feature(core)]
-#![feature(old_io)]
-#![feature(old_path)]
 
 extern crate crc64;
 use crc64::crc64;
 use std::env;
-use std::old_io::{BufferedReader, File};
+use std::path::Path;
+use std::io::{Read,BufReader};
+use std::fs::File;
 
-fn main() {
+pub fn main() {
     let mut args = env::args();
     let (len,_) = args.size_hint();
     let prog = args.next().unwrap();
@@ -19,20 +19,19 @@ fn main() {
 
     for f in args {
         let mut crc : u64 = 0;
-        let file = File::open(&Path::new(f.to_string()));
-        let mut reader = BufferedReader::new(file);
+        let file = File::open(&Path::new(&f)).unwrap();
+        let mut reader = BufReader::new(file);
 
         let mut error = false;
         loop {
             let mut buf = [0; 100];
             match reader.read(buf.as_mut_slice()) {
                 Err(e) => {
-                    if e.kind != std::old_io::EndOfFile {
-                        error = true;
-                        print!("error reading '{}': {}", f, e);
-                    }
+                    error = true;
+                    print!("error reading '{}': {}", f, e);
                     break;
                 },
+                Ok(0) => break,
                 Ok(nread) => crc = crc64::crc64(crc, buf[..nread].as_slice())
             }
         }
