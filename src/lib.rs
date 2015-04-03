@@ -1,5 +1,3 @@
-#![feature(core)]
-
 /// Calculate the crc64 checksum of the given data, starting with the given crc.
 ///
 /// Implements the CRC64 used by Redis, which is the variant with "Jones" coefficients and init value of 0.
@@ -83,7 +81,7 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
     };
 
     for n in (0usize..256) {
-        table[0].push(crc64_trivial(0, vec![n as u8].as_slice()));
+        table[0].push(crc64_trivial(0, &vec![n as u8]));
         table[1].push(0);
         table[2].push(0);
         table[3].push(0);

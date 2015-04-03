@@ -1,5 +1,3 @@
-#![feature(core)]
-
 extern crate crc64;
 use crc64::crc64;
 use std::env;
@@ -25,14 +23,14 @@ pub fn main() {
         let mut error = false;
         loop {
             let mut buf = [0; 100];
-            match reader.read(buf.as_mut_slice()) {
+            match reader.read(&mut buf) {
                 Err(e) => {
                     error = true;
                     print!("error reading '{}': {}", f, e);
                     break;
                 },
                 Ok(0) => break,
-                Ok(nread) => crc = crc64::crc64(crc, buf[..nread].as_slice())
+                Ok(nread) => crc = crc64::crc64(crc, &buf[..nread])
             }
         }
 
