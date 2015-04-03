@@ -1,3 +1,7 @@
+### 0.2.2 - 03. April 2015
+
+* Use only stable features to run on Rust 1.0 Beta
+
 ### 0.2.1 - 23. January 2015
 
 * Fix build issues with Rust nightly
