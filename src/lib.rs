@@ -155,7 +155,7 @@ impl Crc64 {
         Crc64 { crc64: 0 }
     }
     pub fn get(&self) -> u64 {
-        self.crc64.clone()
+        self.crc64
     }
 }
 
@@ -181,7 +181,7 @@ fn test_crc64_write() {
     let value1 = 17326901458626182669;
     let value2 = 16845390139448941002;
     assert_eq!(value1, crc64(0, &step1));
-    assert_eq!(value2, crc64(value1.clone(), &step2));
+    assert_eq!(value2, crc64(value1, &step2));
 
     let mut crc = Crc64::new();
     assert_eq!(crc.write(&step1).unwrap(), step1.len());
