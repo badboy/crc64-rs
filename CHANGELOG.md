@@ -1,3 +1,7 @@
+### 1.0.0 - 06. January 2016
+
+* Implement Crc64 as a struct with Write (@seppo0010)
+
 ### 0.2.2 - 03. April 2015
 
 * Use only stable features to run on Rust 1.0 Beta
