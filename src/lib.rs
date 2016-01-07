@@ -1,25 +1,26 @@
-/// Calculate the crc64 checksum of the given data, starting with the given crc.
-///
-/// Implements the CRC64 used by Redis, which is the variant with "Jones" coefficients and init value of 0.
-///
-/// Specification of this CRC64 variant follows:
-///
-/// ```text
-/// Name: crc-64-jones
-/// Width: 64 bites
-/// Poly: 0xad93d23594c935a9
-/// Reflected In: True
-/// Xor_In: 0xffffffffffffffff
-/// Reflected_Out: True
-/// Xor_Out: 0x0
-/// Check("123456789"): 0xe9c6d914c4b8d9ca
-/// ```
-///
-/// Example:
-///
-/// ```rust
-/// crc64::crc64(0, "123456789".as_bytes());
-/// ```
+//! Calculate the crc64 checksum of the given data, starting with the given crc.
+//!
+//! Implements the CRC64 used by Redis, which is the variant with "Jones" coefficients and init value of 0.
+//!
+//! Specification of this CRC64 variant follows:
+//!
+//! ```text
+//! Name: crc-64-jones
+//! Width: 64 bites
+//! Poly: 0xad93d23594c935a9
+//! Reflected In: True
+//! Xor_In: 0xffffffffffffffff
+//! Reflected_Out: True
+//! Xor_Out: 0x0
+//! Check("123456789"): 0xe9c6d914c4b8d9ca
+//! ```
+//!
+//! Example:
+//!
+//! ```rust
+//! let cksum = crc64::crc64(0, "123456789".as_bytes());
+//! assert_eq!(16845390139448941002, cksum);
+//! ```
 
 use std::io;
 use std::io::Write;
