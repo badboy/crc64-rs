@@ -1,7 +1,8 @@
 # CRC64
 
-[![Build Status](https://travis-ci.org/badboy/crc64-rs.svg?branch=master)](https://travis-ci.org/badboy/crc64-rs)
 [![crates.io](http://meritbadge.herokuapp.com/crc64)](https://crates.io/crates/crc64)
+[![Build Status](https://travis-ci.org/badboy/crc64-rs.svg?branch=master)](https://travis-ci.org/badboy/crc64-rs)
+[![Clippy Linting Result](https://clippy.bashy.io/github/badboy/crc64-rs/master/badge.svg)](https://clippy.bashy.io/github/badboy/crc64-rs/master/log)
 
 A 5-line\* CRC64 implementation in Rust.
 
