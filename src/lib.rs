@@ -22,6 +22,9 @@
 //! assert_eq!(16845390139448941002, cksum);
 //! ```
 
+#![cfg_attr(feature="clippy", feature(plugin))]
+#![cfg_attr(feature="clippy", plugin(clippy))]
+
 use std::io;
 use std::io::Write;
 use std::mem;

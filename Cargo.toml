@@ -20,3 +20,6 @@ path = "src/lib.rs"
 name = "crc64"
 path = "src/main.rs"
 doc  = false
+
+[dependencies]
+clippy = {version = "*", optional = true}
