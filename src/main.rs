@@ -1,5 +1,4 @@
 extern crate crc64;
-use crc64::crc64;
 use std::env;
 use std::path::Path;
 use std::io::{Read,BufReader};
