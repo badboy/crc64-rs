@@ -74,7 +74,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
     }
     crc = crc & 0xffffffffffffffff;
 
-    return crc_reflect(crc, 64) ^ 0x0000000000000000;
+    crc_reflect(crc, 64)
 }
 
 pub fn crc64_init() -> Vec<Vec<u64>> {
@@ -87,7 +87,7 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
     };
 
     for n in 0..256 {
-        table[0].push(crc64_trivial(0, &vec![n as u8]));
+        table[0].push(crc64_trivial(0, &[n as u8]));
         table[1].push(0);
         table[2].push(0);
         table[3].push(0);
@@ -160,6 +160,12 @@ impl Crc64 {
     }
     pub fn get(&self) -> u64 {
         self.crc64
+    }
+}
+
+impl Default for Crc64 {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
