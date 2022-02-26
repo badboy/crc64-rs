@@ -27,7 +27,7 @@
 
 use std::io;
 use std::io::Write;
-use std::mem;
+use std::ptr;
 use crc_table::CRC64_TAB;
 mod crc_table;
 
@@ -114,8 +114,7 @@ macro_rules! slice_to_long {
     ($curVec:expr) => {
         {
             unsafe {
-                let (tmp, _) : (*const u64, usize) = mem::transmute(&$curVec);
-                *tmp
+                ptr::read_unaligned($curVec.as_ptr().cast::<u64>())
             }
         }
     }
