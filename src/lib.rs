@@ -23,7 +23,6 @@
 //! ```
 
 use std::io::{self, Write};
-use std::mem;
 
 use crc_table::CRC64_TAB;
 
@@ -107,14 +106,10 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
     table
 }
 
-// transmute slice of 8 u8 values to one u64 (drop the length)
-macro_rules! slice_to_long {
-    ($curVec:expr) => {{
-        unsafe {
-            let (tmp, _): (*const u64, usize) = mem::transmute(&$curVec);
-            *tmp
-        }
-    }};
+fn to_u64(data: &[u8]) -> u64 {
+    debug_assert!(data.len() == 8);
+    let arr: [u8; 8] = data.try_into().expect("incorrect length");
+    u64::from_le_bytes(arr)
 }
 
 pub fn crc64(crc: u64, data: &[u8]) -> u64 {
@@ -123,7 +118,7 @@ pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut offset = 0usize;
 
     while len >= 8 {
-        crc ^= slice_to_long!(data[offset..(offset + 8)]);
+        crc ^= to_u64(&data[offset..(offset + 8)]);
         crc = CRC64_TAB[7][(crc & 0xff) as usize]
             ^ CRC64_TAB[6][((crc >> 8) & 0xff) as usize]
             ^ CRC64_TAB[5][((crc >> 16) & 0xff) as usize]
