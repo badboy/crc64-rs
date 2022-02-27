@@ -18,7 +18,7 @@
 //! Example:
 //!
 //! ```rust
-//! let cksum = crc64::crc64(0, "123456789".as_bytes());
+//! let cksum = crc64::crc64(0, b"123456789");
 //! assert_eq!(16845390139448941002, cksum);
 //! ```
 
@@ -34,6 +34,14 @@ fn to_u64(data: &[u8]) -> u64 {
     u64::from_le_bytes(arr)
 }
 
+/// Calculate the Crc64 checksum over `data`, starting from `crc`.
+///
+/// ```rust
+/// use crc64::crc64;
+///
+/// let cksum = crc64::crc64(0, b"123456789");
+/// assert_eq!(16845390139448941002, cksum);
+/// ```
 pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut crc = crc;
     let mut len = data.len();
@@ -63,14 +71,29 @@ pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     crc
 }
 
+/// A checksummer.
+///
+/// You can write bytes to it to update the checksum.
+///
+/// ```rust
+/// use std::io::Write;
+/// use crc64::Crc64;
+///
+/// let mut cksum = Crc64::new();
+/// cksum.write(&[0x1, 0x2, 0x3, 0x4, 0x5]);
+/// assert_eq!(18087688510130107988, cksum.get());
+/// ```
 pub struct Crc64 {
     crc64: u64,
 }
 
 impl Crc64 {
+    /// Creates a new checksummer.
     pub fn new() -> Crc64 {
         Crc64 { crc64: 0 }
     }
+
+    /// Gets the current crc64 checksum.
     pub fn get(&self) -> u64 {
         self.crc64
     }
