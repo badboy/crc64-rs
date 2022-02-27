@@ -33,7 +33,7 @@ pub fn main() {
             }
         }
 
-        if error == false {
+        if !error {
             println!("{:x}  {}", crc, f);
         }
     }

@@ -58,7 +58,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
     while offset < len {
         let c = in_data[offset];
         let mut i = 0x01;
-        while i & 0xff != 0x0 {
+        while i != 0x0 {
             bit = crc & 0x8000000000000000 != 0x0;
             if c & i != 0x0 {
                 bit = !bit;
@@ -72,7 +72,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
         crc &= 0xffffffffffffffff;
         offset+=1;
     }
-    crc = crc & 0xffffffffffffffff;
+    crc &= 0xffffffffffffffff;
 
     crc_reflect(crc, 64)
 }
