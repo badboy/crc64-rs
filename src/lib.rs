@@ -22,13 +22,11 @@
 //! assert_eq!(16845390139448941002, cksum);
 //! ```
 
-#![cfg_attr(feature="clippy", feature(plugin))]
-#![cfg_attr(feature="clippy", plugin(clippy))]
-
-use std::io;
-use std::io::Write;
+use std::io::{self, Write};
 use std::mem;
+
 use crc_table::CRC64_TAB;
+
 mod crc_table;
 
 fn crc_reflect(data: u64, len: usize) -> u64 {
@@ -39,7 +37,7 @@ fn crc_reflect(data: u64, len: usize) -> u64 {
     while i < len {
         data >>= 1;
         ret = (ret << 1) | (data & 0x01);
-        i+=1;
+        i += 1;
     }
 
     ret
@@ -49,9 +47,9 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
     let mut crc = crc;
     let len = in_data.len();
 
-    let poly : u64 = 0xad93d23594c935a9;
+    let poly: u64 = 0xad93d23594c935a9;
 
-    let mut bit : bool;
+    let mut bit: bool;
 
     let mut offset = 0;
 
@@ -70,7 +68,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
             i <<= 1;
         }
         crc &= 0xffffffffffffffff;
-        offset+=1;
+        offset += 1;
     }
     crc &= 0xffffffffffffffff;
 
@@ -78,13 +76,13 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
 }
 
 pub fn crc64_init() -> Vec<Vec<u64>> {
-    let mut crc : u64;
+    let mut crc: u64;
 
-    let mut table : Vec<Vec<u64>> = Vec::with_capacity(8);
+    let mut table: Vec<Vec<u64>> = Vec::with_capacity(8);
 
     for _ in 0..8 {
         table.push(Vec::with_capacity(256));
-    };
+    }
 
     for n in 0..256 {
         table[0].push(crc64_trivial(0, &[n as u8]));
@@ -100,25 +98,23 @@ pub fn crc64_init() -> Vec<Vec<u64>> {
     for n in 0..256 {
         crc = table[0][n];
         for k in 1..8 {
-            let idx  = (crc as usize) & 0xff;
+            let idx = (crc as usize) & 0xff;
             crc = table[0][idx] ^ (crc >> 8);
             table[k][n] = crc;
         }
-    };
+    }
 
     table
 }
 
 // transmute slice of 8 u8 values to one u64 (drop the length)
 macro_rules! slice_to_long {
-    ($curVec:expr) => {
-        {
-            unsafe {
-                let (tmp, _) : (*const u64, usize) = mem::transmute(&$curVec);
-                *tmp
-            }
+    ($curVec:expr) => {{
+        unsafe {
+            let (tmp, _): (*const u64, usize) = mem::transmute(&$curVec);
+            *tmp
         }
-    }
+    }};
 }
 
 pub fn crc64(crc: u64, data: &[u8]) -> u64 {
@@ -127,15 +123,15 @@ pub fn crc64(crc: u64, data: &[u8]) -> u64 {
     let mut offset = 0usize;
 
     while len >= 8 {
-        crc ^= slice_to_long!(data[offset..(offset+8)]);
-        crc = CRC64_TAB[7][(crc & 0xff) as usize] ^
-              CRC64_TAB[6][((crc >> 8) & 0xff) as usize] ^
-              CRC64_TAB[5][((crc >> 16) & 0xff) as usize] ^
-              CRC64_TAB[4][((crc >> 24) & 0xff) as usize] ^
-              CRC64_TAB[3][((crc >> 32) & 0xff) as usize] ^
-              CRC64_TAB[2][((crc >> 40) & 0xff) as usize] ^
-              CRC64_TAB[1][((crc >> 48) & 0xff) as usize] ^
-              CRC64_TAB[0][(crc >> 56) as usize];
+        crc ^= slice_to_long!(data[offset..(offset + 8)]);
+        crc = CRC64_TAB[7][(crc & 0xff) as usize]
+            ^ CRC64_TAB[6][((crc >> 8) & 0xff) as usize]
+            ^ CRC64_TAB[5][((crc >> 16) & 0xff) as usize]
+            ^ CRC64_TAB[4][((crc >> 24) & 0xff) as usize]
+            ^ CRC64_TAB[3][((crc >> 32) & 0xff) as usize]
+            ^ CRC64_TAB[2][((crc >> 40) & 0xff) as usize]
+            ^ CRC64_TAB[1][((crc >> 48) & 0xff) as usize]
+            ^ CRC64_TAB[0][(crc >> 56) as usize];
 
         offset += 8;
         len -= 8;
