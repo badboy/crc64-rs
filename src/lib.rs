@@ -181,12 +181,12 @@ fn test_crc64_write() {
     let step2 = "6789".as_bytes();
     let value1 = 17326901458626182669;
     let value2 = 16845390139448941002;
-    assert_eq!(value1, crc64(0, &step1));
-    assert_eq!(value2, crc64(value1, &step2));
+    assert_eq!(value1, crc64(0, step1));
+    assert_eq!(value2, crc64(value1, step2));
 
     let mut crc = Crc64::new();
-    assert_eq!(crc.write(&step1).unwrap(), step1.len());
+    assert_eq!(crc.write(step1).unwrap(), step1.len());
     assert_eq!(value1, crc.get());
-    assert_eq!(crc.write(&step2).unwrap(), step2.len());
+    assert_eq!(crc.write(step2).unwrap(), step2.len());
     assert_eq!(value2, crc.get());
 }
