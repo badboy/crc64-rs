@@ -46,7 +46,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
     let mut crc = crc;
     let len = in_data.len();
 
-    let poly: u64 = 0xad93d23594c935a9;
+    let poly = 0xad93d23594c935a9;
 
     let mut bit: bool;
 
@@ -75,7 +75,7 @@ fn crc64_trivial(crc: u64, in_data: &[u8]) -> u64 {
 }
 
 pub fn crc64_init() -> Vec<Vec<u64>> {
-    let mut crc: u64;
+    let mut crc;
 
     let mut table: Vec<Vec<u64>> = Vec::with_capacity(8);
 

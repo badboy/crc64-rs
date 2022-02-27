@@ -10,7 +10,7 @@ fn main() {
     }
 
     let f = &args[1];
-    let mut crc : u64 = 0;
+    let mut crc = 0;
     let content = fs::read(f).expect("can't read file");
 
     let sz = content.len();
