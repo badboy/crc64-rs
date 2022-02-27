@@ -1,8 +1,9 @@
 # CRC64
 
-[![crates.io](http://meritbadge.herokuapp.com/crc64)](https://crates.io/crates/crc64)
-[![Build Status](https://travis-ci.org/badboy/crc64-rs.svg?branch=master)](https://travis-ci.org/badboy/crc64-rs)
-[![Clippy Linting Result](https://clippy.bashy.io/github/badboy/crc64-rs/master/badge.svg)](https://clippy.bashy.io/github/badboy/crc64-rs/master/log)
+[![crates.io](https://img.shields.io/crates/v/crc64.svg?style=flat-square)](https://crates.io/crates/crc64)
+[![docs.rs docs](https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square)](https://docs.rs/crc64)
+[![License: MIT](https://img.shields.io/github/license/badboy/crc64-rs?style=flat-square)](LICENSE)
+[![Build Status](https://img.shields.io/github/workflow/status/badboy/crc64-rs/CI/main?style=flat-square)](https://github.com/badboy/crc64-rs/actions/workflows/ci.yml)
 
 A 5-line\* CRC64 implementation in Rust.
 
