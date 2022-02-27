@@ -1,13 +1,12 @@
 [package]
 name = "crc64"
-version = "1.0.0"
-authors = ["Jan-Erik Rediger <badboy@archlinux.us>"]
+version = "2.0.0"
 keywords = ["hashing", "checksum"]
 description = "CRC64 checksum implementation"
 edition = "2021"
 
 homepage = "https://github.com/badboy/crc64-rs"
-documentation = "http://badboy.github.io/crc64-rs/"
+documentation = "https://docs.rs/crc64"
 repository = "https://github.com/badboy/crc64-rs"
 
 license = "BSD-3-Clause"

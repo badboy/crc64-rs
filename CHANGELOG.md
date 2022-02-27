@@ -1,3 +1,9 @@
+### 2.0.0 - 27. February 2022
+
+* Remove UB/unsoundness internally
+* Proper documentation
+* Remove unused functionality
+
 ### 1.0.0 - 06. January 2016
 
 * Implement Crc64 as a struct with Write (@seppo0010)
