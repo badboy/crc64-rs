@@ -20,14 +20,21 @@ cargo build --release
 As a library:
 
 ```rust
-use crc64::crc64;
 crc64::crc64(0, "123456789".as_bytes());
 ```
 
-As a standalone application:
+## CLI
+
+Install as a standalone application:
 
 ```
-$ ./target/release/crc64 src/crc64/lib.rs
+cargo install crc64
+```
+
+Use it:
+
+```
+crc64 src/lib.rs
 ```
 
 ## Tests
