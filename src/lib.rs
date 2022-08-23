@@ -42,8 +42,7 @@ fn to_u64(data: &[u8]) -> u64 {
 /// let cksum = crc64::crc64(0, b"123456789");
 /// assert_eq!(16845390139448941002, cksum);
 /// ```
-pub fn crc64(crc: u64, data: &[u8]) -> u64 {
-    let mut crc = crc;
+pub fn crc64(mut crc: u64, data: &[u8]) -> u64 {
     let mut len = data.len();
     let mut offset = 0usize;
 
